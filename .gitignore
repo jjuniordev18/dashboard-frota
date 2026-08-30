@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+
+# dados reais da frota - nao versionar (repo publico)
+PA - CONTROLE DE KM (version 1).xlsx
+PA - CONTROLE DE KM (version 1) (CORRIGIDO).xlsx
+Dashboard_consumo_co2.xlsx
+
+# artefatos gerados
+Apresentacao_Julho_Agosto.xlsx

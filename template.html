@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232563eb'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='36' font-weight='700' text-anchor='middle' fill='%23ffffff'%3EF%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Dashboard de Controle de Frota — Carajás: quilometragem mensal, status operacional, evolução semanal e estimativa de consumo de CO₂ da frota (Diesel e Gasolina). Estático e autocontido, funcional sem Python/Streamlit.">
+<title>{{TITULO}}</title>
+{{PLOTLY_JS}}
+<style>{{CSS}}</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="topo">
+    <div class="topo-meta">
+      <span class="selo">Gestão de Frota · KM &amp; Emissões (ESG)</span>
+      <span class="selo-data">Atualizado em {{GERADO}}</span>
+    </div>
+    <h1>🚛 {{TITULO}}</h1>
+    <p>Monitoramento de quilometragem mensal, status operacional e evolução semanal da frota.
+    Dados corrigidos pelo hodômetro (bloco de cadastro).</p>
+  </header>
+
+  <div class="barra">
+    <label class="chk"><input type="checkbox" id="tema"> 🌙 Modo escuro</label>
+    <label style="color:var(--muted);font-size:14px;">Mês:
+      <select id="mes"></select>
+    </label>
+    <button type="button" class="btn" style="margin-left:auto;" onclick="window.print()">🖨️ Imprimir / PDF</button>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="lbl">🎯 KM total no mês</div><div class="val" id="k1">—</div><div class="sub" id="k1s">—</div></div>
+    <div class="kpi"><div class="lbl">📈 Acumulado histórico</div><div class="val" id="k2">—</div><div class="sub" id="k2s">—</div></div>
+    <div class="kpi"><div class="lbl">🚚 Média por veículo</div><div class="val" id="k3">—</div><div class="sub" id="k3s">—</div></div>
+    <div class="kpi"><div class="lbl">🛠️ Em manutenção</div><div class="val" id="k4">—</div><div class="sub" id="k4s">—</div></div>
+    <div class="kpi"><div class="lbl">✅ Frota operacional</div><div class="val" id="k5">—</div><div class="sub" id="k5s">—</div></div>
+  </div>
+
+  <p class="exec" id="resumoExec">Carregando resumo do mês…</p>
+
+  <h2 class="secao">📊 Quilometragem da frota</h2>
+
+  <div class="grade">
+    <div>
+      <h3 class="carta">📈 KM total por mês (toda a frota)</h3>
+      <div class="plotly-wrap" id="g_tend"></div>
+    </div>
+    <div>
+      <h3 class="carta">🏆 Top 5 veículos do mês</h3>
+      <div class="plotly-wrap" id="g_top"></div>
+    </div>
+  </div>
+
+  <div class="grade2">
+    <div>
+      <h3 class="carta">🚐 KM por tipo de veículo</h3>
+      <div class="plotly-wrap" id="g_tipo"></div>
+    </div>
+    <div>
+      <h3 class="carta">🚦 Status operacional</h3>
+      <div class="plotly-wrap" id="g_status"></div>
+    </div>
+    <div>
+      <h3 class="carta">📊 KM semanal no mês selecionado</h3>
+      <div class="plotly-wrap" id="g_sem"></div>
+    </div>
+  </div>
+
+  <h3 class="carta">📅 Evolução semanal por veículo — <span id="semMes"></span></h3>
+  <div class="tab-scroll" id="tabela_sem"></div>
+
+  <h3 class="carta">🗓️ Detalhamento do mês selecionado</h3>
+  <div class="consol" id="consol_det"></div>
+  <div class="tab-scroll" id="tabela_det"></div>
+
+  <hr style="border-color:var(--borda);">
+  <h2 style="font-size:1.2rem;color:var(--primaria);margin:.9rem 0 .2rem;">⛽ Consumo de CO₂ da frota — veículo a veículo (2025→)</h2>
+  <p class="nota">Período real da planilha: OUTUBRO 2025 → AGOSTO 2026. Estimativa: litros = km real ÷ consumo médio do modelo (Nivus 11, Pulse 11,5, Tracker 11, Hilux/Ranger/S10 9,5, Frontier 9, Strada 10 km/L) e CO₂ = litros × fator MCTI (Diesel 2,68 / Gasolina 2,16 kgCO₂e/L). O veículo leve (TN 01) roda a Gasolina; as Caminhonetes rodam a Diesel. Consumo segue o mesmo mês selecionado acima.</p>
+  <p class="nota" id="compConsumo"></p>
+  <div class="kpis" id="kpis_consumo"></div>
+  <div class="grade">
+    <div>
+      <h3 class="carta">📈 CO₂ mensal consolidado (kg)</h3>
+      <div class="plotly-wrap" id="g_consumo_tend"></div>
+    </div>
+    <div>
+      <h3 class="carta">🏆 Top veículos — CO₂ no mês <span id="consMes1" style="color:var(--muted);"></span></h3>
+      <div class="plotly-wrap" id="g_consumo_veic"></div>
+    </div>
+  </div>
+  <h3 class="carta">🔎 Comparação por veículo — <span id="consMes2"></span></h3>
+  <div class="tab-scroll" id="tabela_consumo"></div>
+
+  <p class="rodape">Gerado em {{GERADO}} • Fonte: PA - CONTROLE DE KM (version 1)</p>
+</main>
+
+<script>{{JS}}</script>
+</body>
+</html>
