@@ -3723,7 +3723,7 @@ return Plotly;
   <header class="topo">
     <div class="topo-meta">
       <span class="selo">Gestão de Frota · KM &amp; Emissões (ESG)</span>
-      <span class="selo-data">Atualizado em 29/08/2026 às 23:42</span>
+      <span class="selo-data">Atualizado em 29/08/2026 às 23:47</span>
     </div>
     <h1>🚛 Dashboard de Controle de Frota — Carajás</h1>
     <p>Monitoramento de quilometragem mensal, status operacional e evolução semanal da frota.
@@ -3801,7 +3801,7 @@ return Plotly;
   <h3 class="carta">🔎 Comparação por veículo — <span id="consMes2"></span></h3>
   <div class="tab-scroll" id="tabela_consumo"></div>
 
-  <p class="rodape">Gerado em 29/08/2026 às 23:42 • Fonte: PA - CONTROLE DE KM (version 1)</p>
+  <p class="rodape">Gerado em 29/08/2026 às 23:47 • Fonte: PA - CONTROLE DE KM (version 1)</p>
 </main>
 
 <script>
@@ -4223,6 +4223,7 @@ renderConsumo();
     }
   } catch(e){}
   if(location.protocol !== 'http:' && location.protocol !== 'https:') return;
+  if(location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') return;
   try {
     var ev = new EventSource('/eventos');
     ev.onmessage = function(m){
