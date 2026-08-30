@@ -1,0 +1,6 @@
+# Tokens de template {{...}} sao quebrados por autoformatadores ({{CSS}} -> { { CSS } }).
+# Estes arquivos nunca devem ser reformatados automaticamente.
+template.html
+template.css
+template.js
+dashboard_frota.html

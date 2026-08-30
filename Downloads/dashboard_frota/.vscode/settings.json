@@ -1,0 +1,29 @@
+{
+  "[html]": {
+    "editor.defaultFormatter": null,
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  },
+  "[css]": {
+    "editor.defaultFormatter": null,
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": null,
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  },
+  "files.watcherExclude": {
+    "**/dashboard_frota.html": true,
+    "**/template.html": true,
+    "**/template.css": true,
+    "**/template.js": true
+  },
+  "search.exclude": {
+    "**/dashboard_frota.html": true,
+    "**/template.html": true,
+    "**/template.css": true,
+    "**/template.js": true
+  }
+}

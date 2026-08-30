@@ -1,0 +1,23 @@
+__pycache__/
+*.pyc
+
+# dados reais da frota - nao versionar (repo publico)
+PA - CONTROLE DE KM (version 1).xlsx
+PA - CONTROLE DE KM (version 1) (CORRIGIDO).xlsx
+Dashboard_consumo_co2.xlsx
+
+# artefatos gerados
+Apresentacao_Julho_Agosto.xlsx
+
+# PowerBI (binarios, dados locais e scripts experimentais)
+dashboard_frota.pbix
+frota_powerbi.xlsx
+gerar_powerbi.py
+power_bi_layout.md
+power_bi_measures.dax
+power_query_frota.pq
+medidas_para_colar.txt
+
+# config local
+.vscode/
+opencode.json
